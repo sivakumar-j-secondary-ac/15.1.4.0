@@ -8,12 +8,11 @@
 
 * install helm
 
-* helm init --wait
-
 ```
 curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > /tmp/get_helm.sh
 chmod 700 /tmp/get_helm.sh
 DESIRED_VERSION=v2.8.2 /tmp/get_helm.sh
+helm init --wait
 kubectl --namespace=kube-system create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 helm ls
 cd ~/
@@ -35,7 +34,6 @@ server:
 
 ```
 helm install -f prometheus-values.yml charts/stable/prometheus --name prometheus --namespace prometheus
-vi grafana-values.yml
 ```
 
 ```
@@ -81,5 +79,8 @@ kubectl get pods -n grafana
      sum(rate(http_request_duration_ms_count[2m])) by (service, route, method, code)  * 60
   
     ```
+* In the dashboard edit, add a alert and set some alert like when of ourquery is > x for last 60s. Save it
+* Get in to the alerting,notification channel fill up in which way you want to receive the above alert
+* All set
 
 
